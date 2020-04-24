@@ -5,6 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Unity;
+using WorkerBee.Models;
+using WorkerBee.ViewModels;
+using WorkerBee.Views;
 
 namespace WorkerBee
 {
@@ -13,5 +17,14 @@ namespace WorkerBee
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            IUnityContainer container = new UnityContainer();
+            container.RegisterType<IDashboardModel, DashboardModel>();
+            container.RegisterType<IDashboadViewModel, DashboardViewModel>();
+
+            DashboardView dashboardView = container.Resolve<DashboardView>();
+            dashboardView.Show();
+        }
     }
 }
