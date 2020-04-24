@@ -19,11 +19,11 @@ namespace WorkerBee.Views
     /// </summary>
     public partial class DashboardView : Window
     {
-        //[Dependency]
-        //public DashboardViewModel ViewModel
-        //{
-        //    set { DataContext = value; }
-        //}
+        [Dependency]
+        public DashboardViewModel ViewModel
+        {
+            set { DataContext = value; }
+        }
 
         public DashboardView()
         {
