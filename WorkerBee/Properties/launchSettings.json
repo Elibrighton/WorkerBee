@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WorkerBee": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Eli.Brighton\\Source\\repos\\WorkerBee\\WorkerBee"
+    }
+  }
+}

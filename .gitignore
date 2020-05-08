@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/WorkerBee/workerbee.db-wal
+/WorkerBee/workerbee.db-shm
+/WorkerBee/workerbee.db

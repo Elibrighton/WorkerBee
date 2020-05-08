@@ -10,5 +10,6 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="{Binding TestLabel}" />
+        <Button Content="Work items" Command="{Binding WorkItemsButtonCommand}" MaxHeight="200" MaxWidth="200" />
     </Grid>
 </Window>
