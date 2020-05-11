@@ -7,6 +7,7 @@ using System.Windows.Input;
 using WorkerBee.Base;
 using WorkerBee.DAL;
 using WorkerBee.Models;
+using WorkerBee.Views;
 
 namespace WorkerBee.ViewModels
 {
@@ -18,29 +19,20 @@ namespace WorkerBee.ViewModels
         {
             _workItemsModel = workItemsModel;
 
-            SaveButtonCommand = new RelayCommand(OnSaveButtonCommand);
             DeleteButtonCommand = new RelayCommand(OnDeleteButtonCommand);
             CompleteButtonCommand = new RelayCommand(OnCompleteButtonCommand);
             IncludeCompletedCheckboxCheckedCommand = new RelayCommand(OnIncludeCompleteButtonCommand);
             SelectedWorkItemDateChangedCommand = new RelayCommand(OnSelectedWorkItemDateChangedCommand);
-            
+            AddButtonCommand = new RelayCommand(OnAddButtonCommand);
+
         }
 
-        public ICommand SaveButtonCommand { get; set; }
         public ICommand DeleteButtonCommand { get; set; }
         public ICommand CompleteButtonCommand { get; set; }
         public ICommand IncludeCompletedCheckboxCheckedCommand { get; set; }
         public ICommand SelectedWorkItemDateChangedCommand { get; set; }
+        public ICommand AddButtonCommand { get; set; }
 
-        public string AddWorkItemTextBoxText
-        {
-            get { return _workItemsModel.AddWorkItemTextBoxText; }
-            set
-            {
-                _workItemsModel.AddWorkItemTextBoxText = value;
-                NotifyPropertyChanged("AddWorkItemTextBoxText");
-            }
-        }
         public ObservableCollection<IWorkItem> WorkItemsListBoxItemSource
         {
             get { return _workItemsModel.WorkItemsListBoxItemSource; }
@@ -87,17 +79,6 @@ namespace WorkerBee.ViewModels
             }
         }
 
-        private void OnSaveButtonCommand(object param)
-        {
-            if (!string.IsNullOrEmpty(AddWorkItemTextBoxText))
-            {
-                _workItemsModel.Create();
-
-                WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
-                AddWorkItemTextBoxText = string.Empty;
-            }
-        }
-
         private void OnDeleteButtonCommand(object param)
         {
             if (SelectedWorkItemsListBoxItem != null)
@@ -126,6 +107,20 @@ namespace WorkerBee.ViewModels
         private void OnSelectedWorkItemDateChangedCommand(object param)
         {
             WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
+        }
+
+        private void OnAddButtonCommand(object param)
+        {
+            var addWorkItemModel = new AddWorkItemModel
+            {
+                SelectedWorkItemDate = SelectedWorkItemDate
+            };
+            var addWorkItemViewModel = new AddWorkItemViewModel(addWorkItemModel);
+            var addWorkItemView = new AddWorkItemView
+            {
+                DataContext = addWorkItemViewModel
+            };
+            addWorkItemView.ShowDialog();
         }
     }
 }

@@ -10,7 +10,6 @@ namespace WorkerBee.Models
 {
     public class WorkItemsModel : IWorkItemsModel
     {
-        public string AddWorkItemTextBoxText { get; set; }
         public ObservableCollection<IWorkItem> WorkItemsListBoxItemSource { get; set; }
         public IWorkItem SelectedWorkItemsListBoxItem { get; set; }
         public bool IsIncludeCompletedCheckboxChecked { get; set; }
@@ -20,15 +19,6 @@ namespace WorkerBee.Models
         {
             SelectedWorkItemDate = DateTime.Now;
             WorkItemsListBoxItemSource = ReadAll();
-        }
-
-        public void Create()
-        {
-            using (var db = new WorkerBeeContext())
-            {
-                db.Add(new WorkItem { Description = AddWorkItemTextBoxText, Date = SelectedWorkItemDate });
-                db.SaveChanges();
-            }
         }
 
         public ObservableCollection<IWorkItem> ReadAll()

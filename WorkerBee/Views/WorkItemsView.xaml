@@ -9,11 +9,6 @@
         Title="Work Items" Height="450" Width="800" 
         WindowStartupLocation="CenterScreen">
     <StackPanel>
-        <StackPanel Orientation="Horizontal" MaxHeight=" 25">
-            <Label Content="Add work item" />
-            <TextBox Text="{Binding AddWorkItemTextBoxText}" MinWidth="200" Padding="10,0,10,0" />
-            <Button Content="Save" Command="{Binding SaveButtonCommand}" MinWidth="25" />
-        </StackPanel>
         <StackPanel>
             <Label Content="Work items" />
             <StackPanel Orientation="Horizontal">
@@ -49,6 +44,7 @@
             </ListView>
         </StackPanel>
         <StackPanel Orientation="Horizontal" MaxHeight=" 25">
+            <Button Content="Add" Command="{Binding AddButtonCommand}" />
             <Button Content="Complete" Command="{Binding CompleteButtonCommand}" MinWidth="25" />
             <Button Content="Delete" Command="{Binding DeleteButtonCommand}" MinWidth="25" />
         </StackPanel>
