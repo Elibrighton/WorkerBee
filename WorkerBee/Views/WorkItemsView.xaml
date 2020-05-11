@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:WorkerBee.Views"
         mc:Ignorable="d"
         Title="Work Items" Height="450" Width="800" 
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
@@ -19,9 +21,30 @@
         </StackPanel>
         <StackPanel Grid.Row="1">
             <Label Content="Work items" />
-            <ListBox ItemsSource="{Binding WorkItemsListBoxItemSource}"
+            <CheckBox Content="Include Completed" 
+                      IsChecked="{Binding IsIncludeCompletedCheckboxChecked}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <i:InvokeCommandAction Command="{Binding IncludeCompletedCheckboxCheckedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unchecked">
+                        <i:InvokeCommandAction Command="{Binding IncludeCompletedCheckboxCheckedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </CheckBox>
+            <ListView ItemsSource="{Binding WorkItemsListBoxItemSource}" MinHeight="600"
                   DisplayMemberPath="Description" 
-                  SelectedItem="{Binding SelectedWorkItemsListBoxItem}" />
+                  SelectedItem="{Binding SelectedWorkItemsListBoxItem}">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Song information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Completed}" Header="Completed" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" MaxHeight=" 25">
+            <Button Content="Complete" Command="{Binding CompleteButtonCommand}" MinWidth="25" />
             <Button Content="Delete" Command="{Binding DeleteButtonCommand}" MinWidth="25" />
         </StackPanel>
     </Grid>

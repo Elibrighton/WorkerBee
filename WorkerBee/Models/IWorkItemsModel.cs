@@ -11,9 +11,11 @@ namespace WorkerBee.Models
         string AddWorkItemTextBoxText { get; set; }
         ObservableCollection<IWorkItem> WorkItemsListBoxItemSource { get; set; }
         IWorkItem SelectedWorkItemsListBoxItem { get; set; }
+        bool IsIncludeCompletedCheckboxChecked { get; set; }
 
         ObservableCollection<IWorkItem> ReadAll();
         void Create();
         void Delete();
+        void MarkAsCompleted();
     }
 }

@@ -13,6 +13,7 @@ namespace WorkerBee.Models
         public string AddWorkItemTextBoxText { get; set; }
         public ObservableCollection<IWorkItem> WorkItemsListBoxItemSource { get; set; }
         public IWorkItem SelectedWorkItemsListBoxItem { get; set; }
+        public bool IsIncludeCompletedCheckboxChecked { get; set; }
 
         public WorkItemsModel()
         {
@@ -35,6 +36,7 @@ namespace WorkerBee.Models
             using (var db = new WorkerBeeContext())
             {
                 workItems = new ObservableCollection<IWorkItem>(db.WorkItems
+                    .Where(wi => IsIncludeCompletedCheckboxChecked || wi.Completed == IsIncludeCompletedCheckboxChecked)
                     .OrderBy(wi => wi.Id));
             }
 
@@ -69,6 +71,19 @@ namespace WorkerBee.Models
             using (var db = new WorkerBeeContext())
             {
                 db.Remove(SelectedWorkItemsListBoxItem);
+                db.SaveChanges();
+            }
+        }
+
+        public void MarkAsCompleted()
+        {
+            using (var db = new WorkerBeeContext())
+            {
+                var workItem = db.WorkItems
+                    .Where(wi => wi.Id == SelectedWorkItemsListBoxItem.Id)
+                    .First();
+
+                workItem.Completed = true;
                 db.SaveChanges();
             }
         }

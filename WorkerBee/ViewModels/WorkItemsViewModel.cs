@@ -20,10 +20,14 @@ namespace WorkerBee.ViewModels
 
             SaveButtonCommand = new RelayCommand(OnSaveButtonCommand);
             DeleteButtonCommand = new RelayCommand(OnDeleteButtonCommand);
+            CompleteButtonCommand = new RelayCommand(OnCompleteButtonCommand);
+            IncludeCompletedCheckboxCheckedCommand = new RelayCommand(OnIncludeCompleteButtonCommand);
         }
 
         public ICommand SaveButtonCommand { get; set; }
         public ICommand DeleteButtonCommand { get; set; }
+        public ICommand CompleteButtonCommand { get; set; }
+        public ICommand IncludeCompletedCheckboxCheckedCommand { get; set; }
 
         public string AddWorkItemTextBoxText
         {
@@ -53,6 +57,18 @@ namespace WorkerBee.ViewModels
                 NotifyPropertyChanged("SelectedWorkItemsListBoxItem");
             }
         }
+        public bool IsIncludeCompletedCheckboxChecked
+        {
+            get { return _workItemsModel.IsIncludeCompletedCheckboxChecked; }
+            set
+            {
+                if (_workItemsModel.IsIncludeCompletedCheckboxChecked != value)
+                {
+                    _workItemsModel.IsIncludeCompletedCheckboxChecked = value;
+                    NotifyPropertyChanged("IsIncludeCompletedCheckboxChecked");
+                }
+            }
+        }
 
         private void OnSaveButtonCommand(object param)
         {
@@ -62,10 +78,6 @@ namespace WorkerBee.ViewModels
 
                 WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
                 AddWorkItemTextBoxText = string.Empty;
-            }
-            else
-            {
-                MessageBox.Show("A description is required.");
             }
         }
 
@@ -77,10 +89,21 @@ namespace WorkerBee.ViewModels
 
                 WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
             }
-            else
+        }
+
+        private void OnCompleteButtonCommand(object param)
+        {
+            if (SelectedWorkItemsListBoxItem != null)
             {
-                MessageBox.Show("Item selection is required.");
+                _workItemsModel.MarkAsCompleted();
+
+                WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
             }
+        }
+
+        private void OnIncludeCompleteButtonCommand(object param)
+        {
+            WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
         }
     }
 }
