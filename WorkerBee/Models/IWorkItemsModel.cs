@@ -12,6 +12,7 @@ namespace WorkerBee.Models
         ObservableCollection<IWorkItem> WorkItemsListBoxItemSource { get; set; }
         IWorkItem SelectedWorkItemsListBoxItem { get; set; }
         bool IsIncludeCompletedCheckboxChecked { get; set; }
+        DateTime SelectedWorkItemDate { get; set; }
 
         ObservableCollection<IWorkItem> ReadAll();
         void Create();

@@ -22,12 +22,15 @@ namespace WorkerBee.ViewModels
             DeleteButtonCommand = new RelayCommand(OnDeleteButtonCommand);
             CompleteButtonCommand = new RelayCommand(OnCompleteButtonCommand);
             IncludeCompletedCheckboxCheckedCommand = new RelayCommand(OnIncludeCompleteButtonCommand);
+            SelectedWorkItemDateChangedCommand = new RelayCommand(OnSelectedWorkItemDateChangedCommand);
+            
         }
 
         public ICommand SaveButtonCommand { get; set; }
         public ICommand DeleteButtonCommand { get; set; }
         public ICommand CompleteButtonCommand { get; set; }
         public ICommand IncludeCompletedCheckboxCheckedCommand { get; set; }
+        public ICommand SelectedWorkItemDateChangedCommand { get; set; }
 
         public string AddWorkItemTextBoxText
         {
@@ -57,6 +60,7 @@ namespace WorkerBee.ViewModels
                 NotifyPropertyChanged("SelectedWorkItemsListBoxItem");
             }
         }
+
         public bool IsIncludeCompletedCheckboxChecked
         {
             get { return _workItemsModel.IsIncludeCompletedCheckboxChecked; }
@@ -66,6 +70,19 @@ namespace WorkerBee.ViewModels
                 {
                     _workItemsModel.IsIncludeCompletedCheckboxChecked = value;
                     NotifyPropertyChanged("IsIncludeCompletedCheckboxChecked");
+                }
+            }
+        }
+
+        public DateTime SelectedWorkItemDate
+        {
+            get { return _workItemsModel.SelectedWorkItemDate; }
+            set
+            {
+                if (_workItemsModel.SelectedWorkItemDate != value)
+                {
+                    _workItemsModel.SelectedWorkItemDate = value;
+                    NotifyPropertyChanged("SelectedWorkItemDate");
                 }
             }
         }
@@ -102,6 +119,11 @@ namespace WorkerBee.ViewModels
         }
 
         private void OnIncludeCompleteButtonCommand(object param)
+        {
+            WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
+        }
+
+        private void OnSelectedWorkItemDateChangedCommand(object param)
         {
             WorkItemsListBoxItemSource = _workItemsModel.ReadAll();
         }

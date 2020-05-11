@@ -9,5 +9,6 @@ namespace WorkerBee.DAL
         int Id { get; set; }
         string Description { get; set; }
         bool Completed { get; set; }
+        DateTime Date { get; set; }
     }
 }

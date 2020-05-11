@@ -15,8 +15,8 @@
             <Button Content="Save" Command="{Binding SaveButtonCommand}" MinWidth="25" />
         </StackPanel>
         <StackPanel>
+            <Label Content="Work items" />
             <StackPanel Orientation="Horizontal">
-                <Label Content="Work items" />
                 <CheckBox Content="Include Completed" 
                       IsChecked="{Binding IsIncludeCompletedCheckboxChecked}">
                     <i:Interaction.Triggers>
@@ -28,14 +28,22 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </CheckBox>
+                <DatePicker SelectedDate="{Binding SelectedWorkItemDate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedWorkItemDateChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
             </StackPanel>
             <ListView ItemsSource="{Binding WorkItemsListBoxItemSource}"
                   DisplayMemberPath="Description" 
                   SelectedItem="{Binding SelectedWorkItemsListBoxItem}">
                 <ListView.View>
                     <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Song information">
-                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Completed}" Header="Completed" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Completed}" Header="Completed" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Date" />
                     </GridView>
                 </ListView.View>
             </ListView>
